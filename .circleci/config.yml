@@ -31,6 +31,7 @@ commands:
           name: Run tests
           command: bazel test
 
+
 jobs:
   build:
     docker:
