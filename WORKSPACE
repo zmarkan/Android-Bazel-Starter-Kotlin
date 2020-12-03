@@ -27,7 +27,8 @@ load("@rules_jvm_external//:defs.bzl", "maven_install")
 
 maven_install(
     artifacts = [
-        "androidx.appcompat:appcompat:1.0.2",
+        "androidx.core:core-ktx:1.2.0",
+        "androidx.appcompat:appcompat:1.1.0",
         "androidx.fragment:fragment:1.0.0",
         "androidx.core:core:1.0.1",
         "androidx.lifecycle:lifecycle-runtime:2.0.0",
@@ -36,8 +37,10 @@ maven_install(
         "androidx.drawerlayout:drawerlayout:1.0.0",
         "androidx.constraintlayout:constraintlayout:1.1.3",
         "com.google.android.material:material:1.0.0",
-        "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.2",
-        "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.2"
+        "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.1",
+        "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.1",
+        "junit:junit:4.+",
+
     ],
     repositories = [
         "https://maven.google.com",
@@ -46,27 +49,25 @@ maven_install(
     fetch_sources = True,
 )
 
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+#load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
-kotlin_version = "1.3.61"
-kotlin_release_sha = "3901151ad5d94798a268d1771c6c0b7e305a608c2889fc98a674802500597b1c"
+rules_kotlin_version = "legacy-1.4.0-rc4"
+rules_kotlin_sha = "9cc0e4031bcb7e8508fd9569a81e7042bbf380604a0157f796d06d511cff2769"
+
+http_archive(
+    name = "io_bazel_rules_kotlin",
+    urls = ["https://github.com/bazelbuild/rules_kotlin/releases/download/%s/rules_kotlin_release.tgz" % rules_kotlin_version],
+    sha256 = rules_kotlin_sha,
+)
+load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kotlin_repositories", "kt_register_toolchains")
+
+kotlin_version = "1.4.20"
+kotlin_release_sha = "11db93a4d6789e3406c7f60b9f267eba26d6483dcd771eff9f85bb7e9837011f"
 rules_kotlin_compiler_release = {
     "urls": [
     "https://github.com/JetBrains/kotlin/releases/download/v{v}/kotlin-compiler-{v}.zip".format(v = kotlin_version),
     ],
     "sha256": kotlin_release_sha,
 }
-
-rules_kotlin_version = "legacy-1.3.0-rc1"
-rules_kotlin_sha = "9de078258235ea48021830b1669bbbb678d7c3bdffd3435f4c0817c921a88e42"
-http_archive(
-    name = "io_bazel_rules_kotlin",
-    urls = ["https://github.com/bazelbuild/rules_kotlin/archive/%s.zip" % rules_kotlin_version],
-    type = "zip",
-    strip_prefix = "rules_kotlin-%s" % rules_kotlin_version,
-    sha256 = rules_kotlin_sha
-)
-
-load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kotlin_repositories", "kt_register_toolchains")
 kotlin_repositories(compiler_release = rules_kotlin_compiler_release)
 kt_register_toolchains()

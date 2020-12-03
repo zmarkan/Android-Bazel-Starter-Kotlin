@@ -1,0 +1,42 @@
+version: 2.1
+
+orbs:
+  android: circleci/android@0.2.3
+
+commands:
+  setup_bazel:
+    description: |
+      Setup the Bazel build system used for building Android projects
+    steps:
+      - run:
+          name: Add Bazel Apt repository
+          command: |
+            sudo apt install curl gnupg
+            curl -fsSL https://bazel.build/bazel-release.pub.gpg | gpg --dearmor > bazel.gpg
+            sudo mv bazel.gpg /etc/apt/trusted.gpg.d/
+            echo "deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8" | sudo tee /etc/apt/sources.list.d/bazel.list
+      - run:
+          name: Install Bazel from Apt
+          command: sudo apt update && sudo apt install bazel
+  bazel_build:
+    description: Build the Bazel project
+    steps:
+      - run:
+          name: Run build
+          command: bazel build //app/src/main:bazel
+  bazel_test:
+    description: Run tests
+    steps:
+      - run:
+          name: Run tests
+          command: bazel test
+
+jobs:
+  build:
+    executor:
+      name: android/android
+      sdk-version: "29"
+    steps:
+      - android/build
+      - setup_bazel
+      - bazel-build
