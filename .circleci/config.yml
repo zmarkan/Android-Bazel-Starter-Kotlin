@@ -4,7 +4,7 @@ orbs:
   android: circleci/android@0.2.3
 
 commands:
-  setup_bazel:
+  setup-bazel:
     description: |
       Setup the Bazel build system used for building Android projects
     steps:
@@ -18,13 +18,13 @@ commands:
       - run:
           name: Install Bazel from Apt
           command: sudo apt update && sudo apt install bazel
-  bazel_build:
+  bazel-build:
     description: Build the Bazel project
     steps:
       - run:
           name: Run build
           command: bazel build //app/src/main:bazel
-  bazel_test:
+  bazel-test:
     description: Run tests
     steps:
       - run:
@@ -38,5 +38,5 @@ jobs:
     steps:
       - checkout
       - android/accept-licenses
-      - setup_bazel
+      - setup-bazel
       - bazel-build
