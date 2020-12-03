@@ -33,10 +33,9 @@ commands:
 
 jobs:
   build:
-    executor:
-      name: android/android
-      sdk-version: "29"
+    docker: circleci/android:api-29
     steps:
-      - android/build
+      - checkout
+      - android/accept-licenses
       - setup_bazel
       - bazel-build
