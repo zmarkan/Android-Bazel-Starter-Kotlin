@@ -23,7 +23,7 @@ commands:
     steps:
       - run:
           name: Run build
-          command: bazel build //app/src/main:bazel
+          command: bazel build //app/src/main:my_bazel_app
   bazel-test:
     description: Run tests
     steps:
