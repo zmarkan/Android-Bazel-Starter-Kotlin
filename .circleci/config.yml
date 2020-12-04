@@ -31,7 +31,6 @@ commands:
           name: Run tests
           command: bazel test
 
-
 jobs:
   build:
     docker:
@@ -41,3 +40,5 @@ jobs:
       - android/accept-licenses
       - setup-bazel
       - bazel-build
+      - store_artifacts:
+          path: /project/bazel-bin/my_bazel_app.apk

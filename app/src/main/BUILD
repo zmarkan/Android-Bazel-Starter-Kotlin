@@ -1,8 +1,8 @@
 load("@rules_jvm_external//:defs.bzl", "artifact")
-load("@rules_android//android:rules.bzl", "android_library")
+load("@rules_android//android:rules.bzl", "android_library", "android_binary")
+load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_android_library")
 
 package(default_visibility = ["//visibility:private"])
-load("@io_bazel_rules_kotlin//kotlin:kotlin.bzl", "kt_android_library")
 
 
 PACKAGE = "io.scal.bazel"
@@ -38,7 +38,7 @@ kt_android_library(
 )
 
 android_binary(
-    name = "bazel",
+    name = "my_bazel_app",
     manifest = MANIFEST,
     custom_package = PACKAGE,
     manifest_values = {

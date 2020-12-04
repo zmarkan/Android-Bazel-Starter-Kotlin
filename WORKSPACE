@@ -49,8 +49,6 @@ maven_install(
     fetch_sources = True,
 )
 
-#load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
-
 rules_kotlin_version = "legacy-1.4.0-rc4"
 rules_kotlin_sha = "9cc0e4031bcb7e8508fd9569a81e7042bbf380604a0157f796d06d511cff2769"
 
