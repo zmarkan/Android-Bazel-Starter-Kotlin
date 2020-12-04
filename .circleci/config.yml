@@ -41,4 +41,4 @@ jobs:
       - setup-bazel
       - bazel-build
       - store_artifacts:
-          path: /project/bazel-bin/my_bazel_app.apk
+          path: ~/project/bazel-bin/app/src/main/my_bazel_app.apk
